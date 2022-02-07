@@ -70,6 +70,8 @@ class BookStore:
 
     class __BookStore:
 
+        """Testing my docstring masssage """""
+
         def __init__(self):
             create_table_sql = 'CREATE TABLE IF NOT EXISTS books (title TEXT, author TEXT, read BOOLEAN, UNIQUE( title COLLATE NOCASE, author COLLATE NOCASE))'
         
