@@ -29,9 +29,12 @@ class Book:
         self.bookstore._delete_book(self)
 
 
+
     def __str__(self):
         read_status = 'have' if self.read else 'have not'
-        return f'ID {self.id}, Title: {self.title}, Author: {self.author}. You {read_status} read this book.'
+        return f'ID {self.id}, Title: {self.title}, Author: {self.author}. You {read_status} ' \
+               f'read {self.title} by {self.author}.'
+
 
 
     def __repr__(self):
@@ -129,24 +132,20 @@ class BookStore:
             if rows_modfied == 0:
                 raise BookError(f'Book with id {book.id} not found')
 
-            
         def _delete_book(self, book):
             """ Removes book from store. Raises BookError if book not in store. 
             :param book the Book to delete """
-
-            if not book.id:
-                raise BookError('Book does not have ID')
-
-            delete_sql = 'DELETE FROM books WHERE rowid = ?'
-
-            with sqlite3.connect(db) as con:
-                deleted = con.execute(delete_sql, (book.id, ) )
-                deleted_count = deleted.rowcount  # rowcount = how many rows affected by the query
-            con.close()
-
-            if deleted_count == 0:
-                raise BookError(f'Book with id {id} not found in store.')
-
+            try:
+                if not book.id:
+                    raise BookError('Book does not have ID')
+                delete_sql = 'DELETE FROM books WHERE rowid = ?'
+                with sqlite3.connect(db) as con:
+                    deleted = con.execute(delete_sql, (book.id, ))
+                    deleted_count = deleted.rowcount  # rowcount = how many rows affected by the query
+                con.close()
+            except FileNotFoundError:
+                if deleted_count == 0:
+                    raise BookError(f'Book with id {id} not found in store.')
 
         def delete_all_books(self):
             """ Deletes all books from database """
@@ -155,9 +154,8 @@ class BookStore:
 
             with sqlite3.connect(db) as con:
                 deleted = con.execute(delete_all_sql)
-
             con.close()
-           
+
 
 
         def exact_match(self, search_book):
