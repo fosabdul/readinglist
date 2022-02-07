@@ -1,7 +1,7 @@
 import sqlite3
 import os 
 
-"""Docstring are comments that helps the programmer better understand how the programs runs and it is functionlity"""
+
 
 db = os.path.join('database', 'books.db')
 
@@ -19,6 +19,8 @@ class Book:
 
         self.bookstore = BookStore()
 
+
+    """"This save function will save all the books the user types by id and also updates the changes """
 
     def save(self):
         if self.id:
@@ -70,6 +72,8 @@ class BookStore:
     instance = None
 
     class __BookStore:
+
+        """Testing my docstring masssage """""
 
         def __init__(self):
             create_table_sql = 'CREATE TABLE IF NOT EXISTS books (title TEXT, author TEXT, read BOOLEAN, UNIQUE( title COLLATE NOCASE, author COLLATE NOCASE))'
