@@ -10,7 +10,8 @@ def display_menu_get_choice(menu):
        
         
         print(menu)
-        choice = input('Enter choice? ')
+        choice = input('Enter choice? ').upper()
+                    # if the user enters the lowercase q the program will pass 
         if menu.is_valid(choice):
             return choice
         else:
@@ -33,16 +34,12 @@ def show_books(books):
         print()
         for book in books:
             # print a blank line before and after 
+          
 
-            line = "-" * len(book)
-
-            print(f'{line}\n{book}\n {line}')
-
+            print(book)
+        print()
             # after the book list
 
-           
-           
-      
 
     else:
         print()
